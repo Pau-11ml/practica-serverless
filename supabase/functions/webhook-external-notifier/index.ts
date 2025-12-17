@@ -217,11 +217,20 @@ serve(async (req) => {
       }
     );
   } catch (error) {
-    console.error("❌ Error:", error);
+    console.error("❌ Error completo:", error);
+    console.error(
+      "❌ Error message:",
+      error.message
+    );
+    console.error("❌ Error stack:", error.stack);
 
     // Retornar 500 para que el publisher reintente
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({
+        error: error.message,
+        stack: error.stack,
+        name: error.name,
+      }),
       {
         status: 500,
         headers: {
